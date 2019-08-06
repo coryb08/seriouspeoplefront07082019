@@ -28,9 +28,7 @@ class Template extends Component {
           >
             <Text style={[fonts.aR, { fontSize: 25 }]}>X</Text>
           </TouchableOpacity>
-          <Text style={[fonts.aR, styles.headerText]}>
-            {this.state.heading}
-          </Text>
+          <Text style={[fonts.aR, { fontSize: 35 }]}>{this.state.heading}</Text>
           <Text style={[fonts.jR, styles.subText]}>{this.state.subText}</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={this.props.onConfirm}>
@@ -100,9 +98,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: "50%",
     justifyContent: "space-around"
-  },
-  headerText: { fontSize: 35 },
-  subText: { fontSize: 15 }
+  }
 });
 
 const fonts = StyleSheet.create({
