@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity
 } from "react-native";
+import { Actions, ActionConst } from "react-native-router-flux";
 import * as actions from "../../store/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
@@ -23,76 +24,81 @@ class LoginSignup extends Component {
   render() {
     const dynamicStyles = {};
 
-    return [
-      <Text style={styles.header}>Have an account?</Text>,
-      <View style={styles.signInContainer}>
-        <TextInput
-          selectionColor="#dddcd5"
-          placeholder="username"
-          style={styles.usernamePassword}
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-        />
-        <TextInput
-          selectionColor="#dddcd5"
-          placeholder="password"
-          secureTextEntry={true}
-          style={styles.usernamePassword}
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-        />
-        <TouchableOpacity
-          onPress={() =>
-            this.props.signInRunner({
-              email: this.state.email,
-              password: this.state.password
-            })
-          }
-          style={styles.signinButton}
-        >
-          <Text style={styles.signinText}>Sign In</Text>
-        </TouchableOpacity>
-      </View>,
-      <View style={styles.signUpContainer}>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center"
-          }}
-          onPress={this.props.facebookLogin}
-        >
-          <FontAwesomeIcon style={styles.signupImg} icon={faFacebook} />
-          <Text style={[styles.signupText]}>continue with facebook</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginTop: 30
-          }}
-          onPress={() => Actions.EmailSignUp()}
-        >
-          <FontAwesomeIcon style={styles.signupImg} icon={faEnvelope} />
-          <Text style={[styles.signupText, { marginLeft: 10 }]}>
-            sign up with email
-          </Text>
-        </TouchableOpacity>
+    return (
+      <View style={this.props.containerStyle}>
+        <Text style={[styles.header, fonts.aR]}>Have an account?</Text>
+        <View style={styles.signInContainer}>
+          <TextInput
+            selectionColor="#dddcd5"
+            placeholder="username"
+            style={styles.usernamePassword}
+            onChangeText={email => this.setState({ email })}
+            value={this.state.email}
+          />
+          <TextInput
+            selectionColor="#dddcd5"
+            placeholder="password"
+            secureTextEntry={true}
+            style={styles.usernamePassword}
+            onChangeText={password => this.setState({ password })}
+            value={this.state.password}
+          />
+          <TouchableOpacity
+            onPress={
+              () =>
+                Actions.confirmDialog({
+                  heading: "Are you sure",
+                  subText: "This is a confirm dialog",
+                  onConfirm: () => {
+                    console.log("confirmed");
+                    Actions.pop();
+                  },
+                  onCancel: () => {
+                    console.log("cancelled");
+                    Actions.pop();
+                  }
+                })
+              // this.props.signInRunner({
+              //   email: this.state.email,
+              //   password: this.state.password
+              // })
+            }
+            style={styles.signinButton}
+          >
+            <Text style={styles.signinText}>Sign In</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.signUpContainer}>
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              alignItems: "center"
+            }}
+            onPress={this.props.facebookLogin}
+          >
+            <FontAwesomeIcon style={styles.signupImg} icon={faFacebook} />
+            <Text style={[styles.signupText]}>continue with facebook</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 30
+            }}
+            onPress={() => Actions.EmailSignUp()}
+          >
+            <FontAwesomeIcon style={styles.signupImg} icon={faEnvelope} />
+            <Text style={[styles.signupText, { marginLeft: 10 }]}>
+              sign up with email
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    ];
+    );
   }
 }
 
 const styles = StyleSheet.create({
-  boldText: {
-    fontFamily: "JosefinSans-Regular",
-    color: "#3b3a30",
-    letterSpacing: 1
-  },
-  header: {
-    marginTop: 100,
-    fontSize: 50,
-    fontFamily: "AmaticSC-Regular"
-  },
   signInContainer: {
     backgroundColor: "#eaece5",
     display: "flex",
@@ -110,9 +116,18 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.15,
     shadowRadius: 2.5,
-
     elevation: 5
   },
+  boldText: {
+    fontFamily: "JosefinSans-Regular",
+    color: "#3b3a30",
+    letterSpacing: 1
+  },
+  header: {
+    marginTop: 100,
+    fontSize: 50
+  },
+
   usernamePassword: {
     width: "80%",
     fontSize: 30,

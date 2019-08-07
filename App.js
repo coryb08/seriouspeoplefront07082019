@@ -23,6 +23,7 @@ const { ConnectedRouter, Scenes } = Router;
 const App = () => {
   return (
     <Provider store={store}>
+      <StatusBar hidden />
       <ConnectedRouter scenes={Scenes} />
     </Provider>
   );

@@ -30,6 +30,8 @@ target 'seriouspeoplefront07082019' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
   target 'seriouspeoplefront07082019Tests' do
     inherit! :search_paths
     # Pods for testing
